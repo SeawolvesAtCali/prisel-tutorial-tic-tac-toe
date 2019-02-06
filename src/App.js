@@ -1,25 +1,26 @@
 import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {
+  ClientContainer,
+  Client,
+  RoomManager,
+  GameStartButton,
+} from '@prisel/react';
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    if (!this.client) {
+      this.client = new Client('ws://localhost:4040');
+    }
+  }
+
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <p>
-            Edit <code>src/App.js</code> and save to reload.
-          </p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-        </header>
+        <ClientContainer username="player1" client={this.client}>
+          <RoomManager gameTypes={['tic-tac-toe']} />
+          <GameStartButton />
+        </ClientContainer>
       </div>
     );
   }
